@@ -6,5 +6,10 @@
 </head>
 <body>
 	<h1>Welcome, World!</h1>
+	{% for student in students %}
+		<ul>
+			<li>{{ student.first_name }}</li>
+		</ul>
+	{% endfor %}
 </body>
 </html>
