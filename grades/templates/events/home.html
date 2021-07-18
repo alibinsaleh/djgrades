@@ -1,4 +1,4 @@
-{% extends 'events/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
 	<center>
@@ -8,6 +8,35 @@
 		{{ cal|safe }}
 		<br><br><br><br>
 		Copyright (c) {{ year }}
+		<br><br><br><br>
+		<div class="row justify-content-center">
+    		<div class="w-50">
+				<table class="table table-striped">
+				  <thead>
+				    <tr>
+				      <th scope="col">#</th>
+				      <th scope="col">First Name</th>
+				      <th scope="col">Middle Name</th>
+				      <th scope="col">Last Name</th>
+				      <th scope="col">Date of Birth</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  	{% for student in students %}
+				    <tr>
+				      <th scope="row">{{ student.id }}</th>
+				      <td>
+				      	<a href="{% url 'student' student.id %}">{{ student.first_name }}</a>
+				      </td>
+				      <td>{{ student.middle_name }}</td>
+				      <td>{{ student.last_name }}</td>
+				      <td>{{ student.dob }}</td>
+				    </tr>
+				    {% endfor %}
+				  </tbody>
+				</table>
+			</div>
+		</div>
 	</center>
 {% endblock %}
 
