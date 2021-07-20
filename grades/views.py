@@ -4,6 +4,7 @@ from .models import Course
 from .models import Grade
 from .models import Assignment
 from .forms import StudentForm
+from .forms import CourseForm
 from django.http import HttpResponseRedirect
 import calendar
 from calendar import HTMLCalendar
@@ -92,6 +93,20 @@ def all_courses(request):
 def course_details(request, course_id):
 	course = Course.objects.get(pk=course_id)
 	return render(request, 'courses/course_details.html', {'course': course})
+
+def add_course(request):
+	submitted = False
+	if request.method == 'POST':
+		form = CourseForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('/add_course?submitted=True')
+	else:
+		form = CourseForm
+		if 'submitted' in request.GET:
+			submitted = True
+	
+	return render(request, 'courses/add_course.html', {'form': form, 'submitted': submitted})
 
 
 
