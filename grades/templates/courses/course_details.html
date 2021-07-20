@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	<section id="cover" class="min-vh-100">
+		<div id="cover-caption">
+			<div class="container">
+				<div class="row text-white">
+					<div class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4">
+						<h1 class="display-4 py-2 text-truncate">Course Details</h1>
+						<div class="px-2">
+							<form action="" class="justify-content-center">
+								<div class="form-group">
+								  <label for="course_name" class="sr-only">Course Name</label>
+								  <input type="text" class="form-control" id="course_name" placeholder="Course Name" value="{{ course }}">
+								</div>
+								<div class="form-group">
+								  <label for="min_mark" class="sr-only">Min Mark</label>
+								  <input type="text" class="form-control" id="min_mark" placeholder="Min Mark" value="{{ course.min_mark }}">
+								</div>
+								<div class="form-group">
+								  <label for="max_mark" class="sr-only">Max Mark</label>
+								  <input type="text" class="form-control" id="max_mark" placeholder="Max Mark" value="{{ course.max_mark }}">
+								</div>
+								
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	
+	<br><br><br><br>
+		<div class="row justify-content-center">
+    		<div class="w-50">
+    			<a class="btn btn-outline-secondary" href="">Add New Course</a>
+    			<br><br>
+				<table class="table table-striped">
+				  <thead>
+				    <tr>
+				      <th scope="col">Course ID</th>
+				      <th scope="col">Course Name</th>
+				      <th scope="col">Min Mark</th>
+				      <th scope="col">Max Mark</th>
+				    </tr>
+				  </thead>
+				  <tbody>
+				  	{% for course in courses_list %}
+				    <tr>
+				      <th scope="row">{{ course.id }}</th>
+				      <td>
+				      	<a href="{% url 'course_details' course.id %}">{{ course }}</a>
+				      </td>
+				      <td>{{ course.min_mark }}</td>
+				      <td>{{ course.max_mark }}</td>
+				    </tr>
+				    {% endfor %}
+				  </tbody>
+				</table>
+			</div>
+		</div>
+
+{% endblock %}

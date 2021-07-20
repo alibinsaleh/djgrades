@@ -1,14 +1,20 @@
 from django.shortcuts import render, get_object_or_404
 from .models import Student
+from .models import Course
+from .models import Grade
+from .models import Assignment
+from .forms import StudentForm
+from django.http import HttpResponseRedirect
 import calendar
 from calendar import HTMLCalendar
 from datetime import datetime
+
 
 # Create your views here.
 
 def home(request, year=datetime.now().year, month=datetime.now().strftime('%B')):
 	# Get names of students
-	students = Student.objects.all()
+	assignments_list = Assignment.objects.all()
 
 	month = month.capitalize()
 	# Convert month from name to number
@@ -24,7 +30,7 @@ def home(request, year=datetime.now().year, month=datetime.now().strftime('%B'))
 	# Get current time
 	time = now.strftime('%I:%M:%S %p')
 
-	return render(request, 'events/home.html', 
+	return render(request, 'home.html', 
 			context= {
 				'year': year,
 				'month': month,
@@ -32,9 +38,15 @@ def home(request, year=datetime.now().year, month=datetime.now().strftime('%B'))
 				'cal': cal,
 				'current_year': current_year,
 				'time': time,
-				'students': students,
+				'now': now.date(),
+				'assignments_list':assignments_list,
 			}
 		)
+
+def all_students(request):
+	students_list = Student.objects.all()
+	return render(request, 'students/all_students.html', {'students_list': students_list})
+
 
 def student_details(request, student_id=1):
 	student = get_object_or_404(Student, pk=student_id)
@@ -45,3 +57,43 @@ def student_details(request, student_id=1):
 				'student': student,
 			}
 		)
+
+
+
+def students_courses(request):
+	student_list = Student.objects.all()
+	grade_list = Grade.objects.all()
+	return render(request, 'students/students_courses.html', {
+		'student_list': student_list,
+		'grade_list': grade_list
+		})
+
+def add_student(request):
+	submitted = False
+	if request.method == 'POST':
+		form = StudentForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('/add_student?submitted=True')
+	else:
+		form = StudentForm
+		if 'submitted' in request.GET:
+			submitted = True
+	
+	return render(request, 'students/add_student.html', {'form': form, 'submitted': submitted})
+
+
+# -----------  Courses views --------------
+def all_courses(request):
+	courses_list = Course.objects.all()
+	return render(request, 'courses/all_courses.html', {'courses_list': courses_list})
+
+
+def course_details(request, course_id):
+	course = Course.objects.get(pk=course_id)
+	return render(request, 'courses/course_details.html', {'course': course})
+
+
+
+
+

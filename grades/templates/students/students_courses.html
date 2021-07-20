@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+	{% for student in student_list %}
+		<div class="container">
+		    
+				<div class="card">
+				  <div class="card-header">
+				    {{ student.first_name }} {{ student.last_name }}
+				  </div>
+				  <div class="card-body">
+				    <h5 class="card-title"></h5>
+				    <p class="card-text">
+				    	<strong>Courses:</strong>
+				    	<br>
+				    	<ul>
+					    	{% for course in student.courses.all %}
+					    		<li>
+					    			{{ course.name }}
+					    		</li>
+					    	{% endfor %}
+				    	</ul>
+				    </p>
+				  </div>
+				</div>
+				<br>
+		</div>
+	{% endfor %}
+{% endblock %}
