@@ -2,6 +2,7 @@ from django import forms
 from django.forms import ModelForm
 from .models import Student
 from .models import Course
+from .models import Assignment
 
 # Create a student add form
 class StudentForm(ModelForm):
@@ -36,3 +37,32 @@ class CourseForm(ModelForm):
 			'min_mark': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Min Mark'}),
 			'max_mark': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Max Mark'}),
 		}
+
+class AssignmentForm(ModelForm):
+	class Meta:
+		model = Assignment
+		fields = "__all__"
+		labels = {
+			'name': '',
+			'assignment_date': '',
+			'assignment_due_date': '',
+			'description': '',
+		}
+
+		widgets = {
+			'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Assignment'}),
+			'assignment_date': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'Date of Assignment'}),
+			'assignment_due_date': forms.DateInput(attrs={'class': 'form-control', 'placeholder': 'Due Date of Assignment'}),
+			'description': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Description'}),
+		}
+		
+
+
+
+
+
+
+
+
+
+

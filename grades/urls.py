@@ -5,6 +5,8 @@ from grades import views
 urlpatterns = [
 	path('', views.home, name='home'),
 	path('<int:year>/<str:month>/', views.home, name='home'),
+	path('add_assignment', views.add_assignment, name='add_assignment'),
+
 	path('all_students', views.all_students, name='all_students'),
 	path('student/<int:student_id>/', views.student_details, name='student_details'),
 	path('students_courses', views.students_courses, name='students_courses'),

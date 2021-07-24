@@ -3,6 +3,7 @@ from .models import Student
 from .models import Course
 from .models import Grade
 from .models import Assignment
+from .forms import AssignmentForm
 from .forms import StudentForm
 from .forms import CourseForm
 from django.http import HttpResponseRedirect
@@ -15,7 +16,7 @@ from datetime import datetime
 
 def home(request, year=datetime.now().year, month=datetime.now().strftime('%B')):
 	# Get names of students
-	assignments_list = Assignment.objects.all()
+	assignments_list = Assignment.objects.all().order_by('-assignment_date')
 
 	month = month.capitalize()
 	# Convert month from name to number
@@ -43,6 +44,22 @@ def home(request, year=datetime.now().year, month=datetime.now().strftime('%B'))
 				'assignments_list':assignments_list,
 			}
 		)
+# Add new Assignment
+def add_assignment(request):
+	submitted = False
+	if request.method == 'POST':
+		form = AssignmentForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('/add_assignment?submitted=True')
+	else:
+		form = AssignmentForm
+		if 'submitted' in request.GET:
+			submitted = True
+	
+	return render(request, 'assignments/add_assignment.html', {'form': form, 'submitted': submitted})
+
+
 
 def all_students(request):
 	students_list = Student.objects.all()
